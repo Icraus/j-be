@@ -13,7 +13,11 @@ public class CustomerDAO {
 
     @Autowired
     CustomerRepo repo;
-
+    /** @Notes:
+        FIXME: In production i would usually use SQL queries to avoid Memory/performance issues
+         we can actually do the regex search in the DB itself and SQLLite3 can
+         Do that but this is just for simplicity
+    */
     public List<Customer> getCustomersByCountry(int start, int count, String countryName){
        return repo.findAll().stream().filter(e -> e.getCountry().equals(countryName)).skip(start).limit(count).collect(Collectors.toList());
     }

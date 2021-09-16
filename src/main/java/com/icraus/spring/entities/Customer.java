@@ -1,9 +1,11 @@
 package com.icraus.spring.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.icraus.spring.utils.JSONify;
+import org.springframework.boot.jackson.JsonComponent;
 
 import javax.persistence.*;
 import java.util.Arrays;
@@ -13,6 +15,8 @@ import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "customer")
+@JsonComponent
+@JsonIgnoreProperties(value = { "country",  "valid", "countryCode"}, allowGetters = true)
 public class Customer implements JSONify {
     @Id
     @GeneratedValue
@@ -114,6 +118,7 @@ public class Customer implements JSONify {
     public String toJson() {
         ObjectMapper mapper = new ObjectMapper();
         try {
+
             return mapper.writeValueAsString(this);
         } catch (JsonProcessingException e) {
             e.printStackTrace();

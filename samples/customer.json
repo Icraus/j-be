@@ -4,7 +4,8 @@
 },
   {
     "name": "Ahmed",
-    "phone": "(258) 8504"
+    "phone": "(258) 8504",
+    "country":"Mozambique","valid":true,"countryCode":"258"
   },
   {
     "name": "Ahmed",
