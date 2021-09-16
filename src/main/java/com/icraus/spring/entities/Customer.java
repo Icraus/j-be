@@ -1,12 +1,19 @@
 package com.icraus.spring.entities;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.icraus.spring.utils.JSONify;
+
 import javax.persistence.*;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "customer")
-public class Customer {
+public class Customer implements JSONify {
     @Id
     @GeneratedValue
     private long id;
@@ -91,6 +98,27 @@ public class Customer {
             setPhone(phone);
         }
         return mPhoneNumber.isValid();
+    }
+
+    public static List<Customer> fromJson(String jsonString){
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return Arrays.stream(mapper.readValue(jsonString, Customer[].class)).collect(Collectors.toList());
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public String toJson() {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
 
