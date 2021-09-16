@@ -1,4 +1,5 @@
-package com.icraus.spring;
+package com.icraus.spring.entities;
+
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -12,11 +13,25 @@ public class Customer {
     @Column(nullable = false, name = "name")
     private String name = "";
 
-    @Column(nullable = false, name = "phone")
     private String phone = "";
 
+    @Transient
+    private PhoneNumber mPhoneNumber;
+
+
     public String getPhone() {
+        if(mPhoneNumber == null){
+            setPhone(phone);
+        }
         return phone;
+    }
+
+    @Column(nullable = false, name = "phone")
+    @Access(AccessType.PROPERTY)
+    public void setPhone(String phone) {
+        this.phone = phone;
+        this.mPhoneNumber = null;
+        this.mPhoneNumber = new PhoneNumber(phone);
     }
 
     @Override
@@ -32,16 +47,15 @@ public class Customer {
         return Objects.hash(getName(), getPhone());
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
+
 
     public Customer(){
     }
+
     public Customer(long id, String name, String phone) {
         this.id = id;
         this.name = name;
-        this.phone = phone;
+        this.setPhone(phone);
     }
 
     public long getId() {
@@ -59,4 +73,24 @@ public class Customer {
     public void setName(String name) {
         this.name = name;
     }
+
+    public String getCountry(){
+        if(mPhoneNumber == null){
+            setPhone(phone);
+        }
+        return mPhoneNumber.getCountry();
+    }
+    public String getCountryCode(){
+        if(mPhoneNumber == null){
+            setPhone(phone);
+        }
+        return mPhoneNumber.getCountryCode();
+    }
+    public boolean isValid(){
+        if(mPhoneNumber == null){
+            setPhone(phone);
+        }
+        return mPhoneNumber.isValid();
+    }
 }
+
