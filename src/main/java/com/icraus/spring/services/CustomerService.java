@@ -8,10 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController()
@@ -131,8 +128,14 @@ class CustomerService {
     }
 
     @GetMapping(value = "/customers/{id}", produces = "application/json")
-    public Customer doGetAllCustomerByName(@PathVariable() Long id) {
-        return repo.getRepo().getCustomerById(id);
+    public Map<String, Object> doGetAllCustomerByName(@PathVariable() Long id, @RequestParam Map<String, String> otherParams) {
+        Map<String, Object> result = new HashMap<>();
+        result.put("count", "1");
+        var element = repo.getRepo().getCustomerById(id);
+        var list = new ArrayList<Customer>();
+        list.add(element);
+        result.put("items", list);
+        return result;
     }
 
 }
