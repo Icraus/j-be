@@ -21,6 +21,9 @@ public class CustomerDAO {
     public List<Customer> getCustomersByCountry(int start, int count, String countryName){
        return repo.findAll().stream().filter(e -> e.getCountry().equals(countryName)).skip(start).limit(count).collect(Collectors.toList());
     }
+    public Long getCustomersCountByCountry(String c){
+        return repo.findAll().stream().filter(e -> e.getCountry().equals(c)).count();
+    }
 
     public List<Customer> getCustomersByCountry(int count, String countryName){
         return getCustomersByCountry(0, count, countryName);
@@ -34,6 +37,10 @@ public class CustomerDAO {
         return getCustomersByCountryCode(0, count, countryCode);
     }
 
+    public Long getCustomersCountByCountryCode(String c){
+        return repo.findAll().stream().filter(e -> e.getCountryCode().equals(c)).count();
+    }
+
     public List<Customer> getCustomersByState(int start, int count, boolean state){
         return repo.findAll().stream().filter(e -> e.isValid() == state).skip(start).limit(count).collect(Collectors.toList());
     }
@@ -41,6 +48,10 @@ public class CustomerDAO {
     public List<Customer> getCustomersByState(int count, boolean state){
         return getCustomersByState(0, count, state);
     }
+    public Long getCustomersCountByCountryState(boolean state){
+        return repo.findAll().stream().filter(e -> e.isValid() == state).count();
+    }
+
 
     public CustomerRepo getRepo(){
         return repo;

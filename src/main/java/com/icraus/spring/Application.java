@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @SpringBootApplication
 public class Application {
     public static void main(String[] args) {
-        PhoneNumber.init("samples/countries.json");
+        PhoneNumber.init("config/countries.json");
         SpringApplication.run(Application.class, args);
     }
 

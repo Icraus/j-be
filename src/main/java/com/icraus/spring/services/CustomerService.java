@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 class CustomerService {
     @FunctionalInterface
     private interface Callable{
-        List<Customer> call(int start, int count, String name);
+        Map<String, Object> call(int start, int count, String name);
     }
     private Integer getValue(String name, Map<String, String> queryMap ,Integer defaultValue){
         if(queryMap.containsKey(name)){
@@ -41,14 +42,14 @@ class CustomerService {
         return Optional.ofNullable(defaultValue);
     }
 
-    private List<Customer> doOrGetAll(Map<String, String> queryParams, String nameValue, Callable obj){
+    private Map<String, Object> doOrGetAll(Map<String, String> queryParams, String nameValue, Callable obj){
         int start = getValue("start", queryParams, 0);
         int count = getValue("count", queryParams, 20);
         Optional<String> name = getValueString(nameValue, queryParams, null);
         Pageable page = PageRequest.of(start,count);
         if (name.isPresent())
             return obj.call(start, count, name.get());
-        return repo.getRepo().findAll(page).getContent();
+        return doGetAllCustomer(queryParams);
     }
 
     @Autowired
@@ -58,12 +59,16 @@ class CustomerService {
      *
      */
     @GetMapping(value = "/customers", produces = "application/json")
-    public List<Customer> doGetAllCustomer(@RequestParam(defaultValue = "start=0&count=20") Map<String,String> queryParams) {
+    public Map<String, Object> doGetAllCustomer(@RequestParam(defaultValue = "start=0&count=20") Map<String,String> queryParams) {
         int start = getValue("start", queryParams, 0);
         int count = getValue("count", queryParams, 20);
         Pageable page = PageRequest.of(start,count);
-        return repo.getRepo().findAll(page).getContent();
-
+        var customerList = repo.getRepo().findAll(page).getContent();
+        Long totalCount = repo.getRepo().count();
+        Map<String, Object> result = new HashMap<>();
+        result.put("count", totalCount);
+        result.put("items", customerList);
+        return result;
     }
 
     @GetMapping(value = "/customers/state", produces = "application/json")
@@ -76,37 +81,53 @@ class CustomerService {
     }
 
     @GetMapping(value = "/customers/country", produces = "application/json")
-    public List<Customer> doGetAllCustomerByCountry(@RequestParam(defaultValue = "start=0&count=20") Map<String,String> queryParams) {
+    public Map<String, Object> doGetAllCustomerByCountry(@RequestParam(defaultValue = "start=0&count=20") Map<String,String> queryParams) {
         return doOrGetAll(queryParams, "country",
                 (start, count, c)-> {
-                    return repo.getCustomersByCountry(start, count, c);
+                    var customerList = repo.getCustomersByCountry(start, count, c);
+                    Map<String, Object> result = new HashMap<>();
+                    result.put("items", customerList);
+                    result.put("count", repo.getCustomersCountByCountry(c));
+                    return result;
                 });
     }
 
     @GetMapping(value = "/customers/countryCode", produces = "application/json")
-    public List<Customer> doGetAllCustomerByCountryCode(@RequestParam(defaultValue = "start=0&count=20") Map<String,String> queryParams) {
+    public Map<String, Object> doGetAllCustomerByCountryCode(@RequestParam(defaultValue = "start=0&count=20") Map<String,String> queryParams) {
         return doOrGetAll(queryParams, "countryCode",
                 (start, count, c)-> {
-                    return repo.getCustomersByCountryCode(start, count, c);
+                    var customerList = repo.getCustomersByCountryCode(start, count, c);
+                    Map<String, Object> result = new HashMap<>();
+                    result.put("items", customerList);
+                    result.put("count", repo.getCustomersCountByCountryCode(c));
+                    return result;
                 });
     }
 
     @GetMapping(value = "/customers/phone", produces = "application/json")
-    public List<Customer> doGetAllCustomerByPhone(@RequestParam(defaultValue = "start=0&count=20") Map<String,String> queryParams) {
+    public Map<String, Object> doGetAllCustomerByPhone(@RequestParam(defaultValue = "start=0&count=20") Map<String,String> queryParams) {
         return doOrGetAll(queryParams, "phone",
                 (start, count, c)-> {
                     Pageable page = PageRequest.of(start,count);
-                    return repo.getRepo().getCustomersByPhone(c, page);
+                    var customerList = repo.getRepo().getCustomersByPhone(c, page);
+                    Map<String, Object> result = new HashMap<>();
+                    result.put("items", customerList);
+                    result.put("count", repo.getRepo().getCustomersCountByPhone(c));
+                    return result;
                 });
     }
 
     @GetMapping(value = "/customers/name", produces = "application/json")
-    public List<Customer> doGetAllCustomerByName(@RequestParam(defaultValue = "start=0&count=20") Map<String,String> queryParams) {
+    public Map<String, Object> doGetAllCustomerByName(@RequestParam(defaultValue = "start=0&count=20") Map<String,String> queryParams) {
         return doOrGetAll(queryParams, "name",
                 (start, count, c)-> {
                     Pageable page = PageRequest.of(start,count);
-                    return repo.getRepo().getCustomersByName(c, page);
-            });
+                    var customerList = repo.getRepo().getCustomersByName(c, page);
+                    Map<String, Object> result = new HashMap<>();
+                    result.put("items", customerList);
+                    result.put("count", repo.getRepo().getCustomersCountByName(c));
+                    return result;
+                });
     }
 
     @GetMapping(value = "/customers/{id}", produces = "application/json")
