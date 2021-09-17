@@ -32,4 +32,17 @@ class PhoneNumberTest {
         assertTrue(phoneNumberObject.isValid());
     }
 
+    @Test
+    void testReadPhoneNumberCategoryCameroon(){
+        String phoneNumber = "(237) 697151594";
+//        "\(237\)\ ?[2368]\d{7,8}$";
+        String country = "Cameroon";
+        String countryCode = "273";
+        boolean isValid = true;
+        PhoneNumber phoneNumberObject = new PhoneNumber(phoneNumber);
+        assertEquals(country, phoneNumberObject.getCountry());
+        assertEquals(countryCode, phoneNumberObject.getCountryCode());
+        assertTrue(phoneNumberObject.isValid());
+    }
+
 }
