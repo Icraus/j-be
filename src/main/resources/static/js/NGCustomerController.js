@@ -1,28 +1,48 @@
-var app = angular.module("customerApp", ["ngTable"]);
+var app = angular.module('customerApp', ['ui.grid','ui.grid.pagination']);
 
-app.controller('CustomerController', function($scope, $http, NgTableParams ) {
-        $http.get("http://localhost:8080/rest/customers").then(function(response) {
+app.controller('CustomerController', function($scope, $http, uiGridConstants) {
+    function getCustomers(newPage, pageSize){
+        var params = "start=" + newPage;
+        params += "&count=" + pageSize;
+        $http.get("http://localhost:8080/rest/customers?" + params).then(function(response) {
             $scope.customerList = response.data;
-            $scope.customerTable = new NgTableParams({}, {
-                total: $scope.customerList.total,
-                dataset: $scope.customerList
+            $scope.gridOptions.data = $scope.customerList.items;
+            $scope.gridOptions.totalItems = $scope.customerList.count;
 
-        });
+        })
 
-    // $http.get("http://localhost:8080/rest/customers?start=" + page + "&count=" + count).then(function(response) {
-    //     $scope.customerList = response.data;
-    //     $scope.customerTable = new NgTableParams({page:1, count:10}, {
-    //         total: 0,
-    //         dataset: $scope.customerList
-    //     });
-    // });
+    };
+    var paginationOptions = {
+        pageNumber: 0,
+        pageSize: 10,
+        sort: null
+    };
+    $scope.gridOptions = {
+        paginationPageSizes: [10, 15],
+        paginationPageSize: 10,
+        useExternalPagination: true,
+        columnDefs: [
+            { name: 'id' },
+            { name: 'name' },
+            { name: 'phone' },
+            { name: 'country' },
+            { name: 'countryCode' },
+            { name: 'valid' }
+        ],
+        enablePaginationControls: true,
+        onRegisterApi: function(gridApi) {
+            $scope.gridApi = gridApi;
+            gridApi.pagination.on.paginationChanged(
+                $scope,
+                function (newPage, pageSize) {
+                    paginationOptions.pageNumber = newPage;
+                    paginationOptions.pageSize = pageSize;
+                    getCustomers(parseInt(newPage) - 1, pageSize);
 
+                }
+            );
+        }
+
+    };
+    getCustomers(0, 10);
 });
-// var x= angular.module('demo', [])
-// .controller('cc', function($scope, $http) {
-//     $http.get('http://localhost:8080/rest/customers').
-//     then(function(response) {
-//         $scope.customerList = response.data;
-//
-//     });
-// });

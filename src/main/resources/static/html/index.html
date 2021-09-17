@@ -3,40 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-animate.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-aria.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-messages.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/md-data-table/1.8.0/md-data-table-templates.min.js"></script>
+  <link rel="stylesheet" href="http://ui-grid.info/release/ui-grid.css" type="text/css">
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+  <script src="http://ui-grid.info/release/ui-grid.js"></script>
   <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet" media="screen">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ng-table/1.0.0/ng-table.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-table/1.0.0/ng-table.js"></script>
-
-  <script type="text/javascript">
-    /**
-     * You must include the dependency on 'ngMaterial'
-     */
-    angular.module('BlankApp', ['ngMaterial', 'ngMessages']);
-  </script>
   <script src="js/NGCustomerController.js"></script>
 </head>
 
 <body>
-  <div ng-controller="CustomerController">
-    <table ng-table ="customerTable" class="table table-striped" show-filter="true">
-      <tr ng-repeat="user in $data">
-        <td data-title="'id'" filter="{ id: 'text'}" sortable="'id'">{{user.id}}</td>
-        <td data-title="'Name'" filter="{ name: 'text'}" sortable="'name'">{{user.name}}</td>
-        <td data-title="'Phone'" filter="{ phone: 'text'}" sortable="'phone'">{{user.phone}}</td>
-        <td data-title="'Country'" filter="{ country: 'text'}" sortable="'country'">{{user.country}}</td>
-        <td data-title="'Country Code'" filter="{ countryCode: 'text'}" sortable="'countryCode'">{{user.countryCode}}</td>
-        <td data-title="'Is Valid'" filter="{ name: 'text'}" sortable="'name'">{{user.valid}}</td>
-      </tr>
-    </table>
+  <div ng-controller="CustomerController as vm">
+    <div ui-grid="gridOptions" class="grid" ui-grid-pagination>
+    </div>
 
   </div>
 
