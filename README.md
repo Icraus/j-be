@@ -5,7 +5,9 @@ The application consists of **Backend**, **Web Client**, **Mobile app**:
 - **Backend** is written in **Java/Spring** Boot and uses **SQLite3** database.
 - **Web Client** is written in **AngularJS, Bootstrap, HTML/CSS**.
 - **Mobile** Client is written in **Flutter**.
-
+##Quick start for deployment
+- The Easiest way is to download **deploy.cmd** and call it. 
+  
 ## Getting started with Backend:
 - clone the project using.
   ```
@@ -87,4 +89,5 @@ The application consists of **Backend**, **Web Client**, **Mobile app**:
     * I would use **SQL views** instead of **normal queries(select)** which I can use **regex(which is supported by SQLite3)** to 
       get *country, code and valid* easier.
     * I would use **docker swarm or kubernetes** to *manage the service* instead of normal **docker** containers.
-  
+    * I would have used git submodules to manage dependencies between the three projects.
+    
