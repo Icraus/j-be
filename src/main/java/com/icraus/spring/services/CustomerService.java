@@ -59,7 +59,12 @@ class CustomerService {
     public Map<String, Object> doGetAllCustomer(@RequestParam(defaultValue = "start=0&count=20") Map<String,String> queryParams) {
         int start = getValue("start", queryParams, 0);
         int count = getValue("count", queryParams, 20);
-        Pageable page = PageRequest.of(start,count);
+        Pageable page = null;
+        if(count == -1){
+            page = Pageable.unpaged();
+        }else{
+            page = PageRequest.of(start,count);
+        }
         var customerList = repo.getRepo().findAll(page).getContent();
         Long totalCount = repo.getRepo().count();
         Map<String, Object> result = new HashMap<>();

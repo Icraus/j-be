@@ -16,7 +16,7 @@ class PhoneNumberTest {
     @Test
     void testReadCountriesFile(){
         var result = PhoneNumber.getCountryByName("Cameroon");
-        assertEquals("273", result.get("code"));
+        assertEquals("237", result.get("code"));
         assertEquals("\\(237\\)\\ ?[2368]\\d{7,8}$", result.get("regex"));
     }
     @Test
@@ -37,7 +37,7 @@ class PhoneNumberTest {
         String phoneNumber = "(237) 697151594";
 //        "\(237\)\ ?[2368]\d{7,8}$";
         String country = "Cameroon";
-        String countryCode = "273";
+        String countryCode = "237";
         boolean isValid = true;
         PhoneNumber phoneNumberObject = new PhoneNumber(phoneNumber);
         assertEquals(country, phoneNumberObject.getCountry());

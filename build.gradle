@@ -28,6 +28,21 @@ dependencies {
 
 }
 
+task copyDB(type: Copy){
+    from "$rootDir/database"
+    into "$rootDir/release/database"
+}
+task copyConfigs(type: Copy){
+    from "$rootDir/config"
+    into "$rootDir/release/config"
+}
+task release(type: Copy){
+    version = '0.0.1-release'
+    dependsOn build, copyConfigs, copyDB
+    from bootJar
+    into "$rootDir/release"
+}
+
 test {
     useJUnitPlatform()
 }
