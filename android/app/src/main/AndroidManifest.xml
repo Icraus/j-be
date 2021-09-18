@@ -1,6 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.icraus.j_customer_mobile_clinet">
-   <application
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application
         android:label="j_customer_mobile_clinet"
         android:icon="@mipmap/ic_launcher">
         <activity
