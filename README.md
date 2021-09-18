@@ -5,9 +5,33 @@ The application consists of **Backend**, **Web Client**, **Mobile app**:
 - **Backend** is written in **Java/Spring** Boot and uses **SQLite3** database.
 - **Web Client** is written in **AngularJS, Bootstrap, HTML/CSS**.
 - **Mobile** Client is written in **Flutter**.
+
+
 ##Quick start for deployment
-- The Easiest way is to download **deploy.cmd** and call it. 
-  
+- The Easiest way is to download **deploy.cmd** and call it.
+
+## Project structure
+```
+|-- FE
+|   |-- release //Web client release folder
+|   `-- src     //Web client src folder
+|-- j-be
+|   |-- build
+|   |-- config
+|   |-- database
+|   |-- gradle
+|   |-- release    //Release folder contains all reuired files
+|   |-- samples
+|   `-- src
+`-- mobile-client
+    |-- android
+    |-- build\app\outputs\flutter-apk   //release folder contaisn all requried files 
+    |-- ios
+    |-- lib     //src code for mobile-client
+    `-- test
+
+
+```
 ## Getting started with Backend:
 - clone the project using.
   ```
