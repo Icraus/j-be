@@ -12,6 +12,12 @@ repositories {
     mavenCentral()
 }
 
+task release(type: Copy){
+    version = '0.0.1-release'
+    dependsOn build
+    from bootJar
+    into "$rootDir/release"
+}
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
