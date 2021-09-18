@@ -102,6 +102,33 @@ The application consists of **Backend**, **Web Client**, **Mobile app**:
   ```
   then you can drag and drop it to your emulator.
 
+## Usage:
+- To test the REST api
+    * to get the first 5 customers 
+    ```
+    curl http://localhost:8080/rest/customers?start=0&count=5
+    ```
+    * to get the first 5 customers by name
+    ```
+    curl http://localhost:8080/rest/customers/name?name=whatever&start=0&count=5
+    ```
+    * to get the first 5 customers by countryCode
+    ```
+    curl http://localhost:8080/rest/customers/countryCode?countryCode=237&start=0&count=5
+    ```
+    * to get the customer by id
+    ```
+    curl http://localhost:8080/rest/customers/5
+    ```
+- To test the Web client
+    open your browser and call
+    ``` 
+    http://localhost:8081/
+    ```
+- To test the Mobile client
+  open your android emulator and drag and drop 
+  ```build\app\outputs\flutter-apk\app-release.apk```
+
 ## Notes about the design:
   - First I have to say that I would have chosen other approaches to deal with
     these tasks as this is not a production code.
