@@ -66,7 +66,7 @@ The application consists of **Backend**, **Web Client**, **Mobile app**:
   ```
 - run
   ```
-  gradlew :build
+  gradlew :release
   ```
   this should generate release folder which you can after that call it
   ```
@@ -87,7 +87,7 @@ The application consists of **Backend**, **Web Client**, **Mobile app**:
 - make sure you added flutter to your env path and run
   ```
   flutter pub get
-  flutter build release
+  flutter build apk
   ```
   this should generate release folder which you can after that call it
   ```
