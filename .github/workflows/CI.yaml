@@ -19,14 +19,14 @@ jobs:
           channel: 'stable' # or: 'beta', 'dev' or 'master'
       - run: flutter pub get
       - run: flutter build apk
-            - name: upload jar file
-              uses: svenstaro/upload-release-action@v2
-              env:
-                GITHUB_TOKEN: ${{ github.token }}
-              with:
-                repo_token: ${{ secrets.GITHUB_TOKEN }}
-                upload_url: ${{ steps.create_release.outputs.upload_url }}
-                tag: ${{ github.ref }}
-                file: ./build/app/outputs/flutter-apk/*.apk
-                overwrite: true
-                file_glob: true
+      - name: upload jar file
+        uses: svenstaro/upload-release-action@v2
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          tag: ${{ github.ref }}
+          file: ./build/app/outputs/flutter-apk/*.apk
+          overwrite: true
+          file_glob: true
