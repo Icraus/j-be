@@ -3,6 +3,9 @@
 # installtion and how to use
 Get started by reading this [README](https://github.com/Icraus/j-be/blob/master/README.md).
 
+![class Diagaram](https://github.com/Icraus/j-be/blob/gh-pages/uml.png)
+![class Diagaram](https://github.com/Icraus/j-be/blob/gh-pages/class.png)
+
 # Notes about the design:
 - First I have to say that I would have chosen other approaches to deal with these tasks as this is not a production code.
 - In production, I would choose other approaches to handle the country stuff differently
