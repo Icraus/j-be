@@ -3,6 +3,7 @@
 # installtion and how to use
 Get started by reading this [README](https://github.com/Icraus/j-be/blob/master/README.md).
 
+![dep Diagaram](/dep.png)
 ![uml Diagaram](/class.png)
 ![class Diagaram](/uml.png)
 
