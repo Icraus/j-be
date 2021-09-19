@@ -9,8 +9,13 @@ The application consists of **Backend**, **Web Client**, **Mobile app**:
 - **Web Client** is written in **AngularJS, Bootstrap, HTML/CSS**.
 - **Mobile** Client is written in **Flutter**.
 
+## Dependencies
+- **Java 11 or higher** 
+- **Spring boot 5.x**
+- **Flutter**
+- **andorid Emulator**
 
-##Quick start for deployment
+## Quick start for deployment
 - The Easiest way is to download **deploy.cmd** and call it.
 
 ## Project structure
