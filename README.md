@@ -1,5 +1,8 @@
 # J-Customer app.
 
+![mobile-client branch workflow](https://github.com/icraus/j-be/actions/workflows/CI.yaml/badge.svg??branch=mobile-client)
+
+
 ## Quick start
 The application consists of **Backend**, **Web Client**, **Mobile app**:
 - **Backend** is written in **Java/Spring** Boot and uses **SQLite3** database.
